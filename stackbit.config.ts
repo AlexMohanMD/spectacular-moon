@@ -17,7 +17,7 @@ contentSources: [
           type: "page",
           // Static URL path derived from the "slug" field
           urlPath: "/{slug}",
-          filePath: "content/pages/{slug}.json",
+          filePath: "content/pages/{slug}.md",
           fields: [{ name: "title", type: "string", required: true }]
         },
         // ...
