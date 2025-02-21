@@ -4,19 +4,25 @@ export default defineStackbitConfig({
     "stackbitVersion": "~0.6.0",
     "nodeVersion": "18",
     "ssgName": "nextjs",
-    contentSources: [
+    "postInstallCommand": "npm i --no-save @stackbit/types"
+contentSources: [
     new GitContentSource({
       rootPath: __dirname,
       contentDirs: ["content"],
       models: [
         {
           name: "Page",
-          // Define the model as a page model
           type: "page",
+          // Static URL path derived from the "slug" field
           urlPath: "/{slug}",
           filePath: "content/pages/{slug}.json",
-          fields: [{ name: "title", type: "string", required: true }]]})],
-    siteMap: ({ documents, models }) => {
+          fields: [{ name: "title", type: "string", required: true }]
+        },
+        // ...
+      ],
+    })
+  ],
+  siteMap: ({ documents, models }) => {
     // 1. Filter all page models
     const pageModels = models.filter((m) => m.type === "page")
 
@@ -45,6 +51,5 @@ export default defineStackbitConfig({
         };
       })
       .filter(Boolean) as SiteMapEntry[];
-          },
-    "postInstallCommand": "npm i --no-save @stackbit/types"
-})
+  }
+});
