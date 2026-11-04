@@ -1,26 +1,25 @@
 const sourcebit = require('sourcebit');
 const sourcebitConfig = require('./sourcebit.js');
-const withPWA = require('next-pwa');
-const runtimeCaching = require('next-pwa/cache')
+const withPWA = require('@ducanh2912/next-pwa').default({
+    dest: 'public',
+    disable: process.env.NODE_ENV === 'development'
+});
 
 sourcebit.fetch(sourcebitConfig);
 
 module.exports = withPWA({
+    output: 'export',
     trailingSlash: true,
-    devIndicators: {
-        autoPrerender: false
+    images: {
+        unoptimized: true
     },
-    pwa: {
-        dest: 'public',
-        runtimeCaching,
-      },
     webpack: (config, { webpack }) => {
         // Tell webpack to ignore watching content files in the content folder.
         // Otherwise webpack receompiles the app and refreshes the whole page.
         // Instead, the src/pages/[...slug].js uses the "withRemoteDataUpdates"
         // function to update the content on the page without refreshing the
         // whole page
-        config.plugins.push(new webpack.WatchIgnorePlugin([[/\/content\//]]));
+        config.plugins.push(new webpack.WatchIgnorePlugin({ paths: [/\/content\//] }));
         return config;
     }
 });
