@@ -4,3 +4,8 @@ command = "npm run build"
 
 [build.environment]
 NODE_VERSION = "26"
+
+# File-based plugin config takes precedence over UI-installed plugins,
+# pinning the Next.js runtime to v5 (the UI had an incompatible v3).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

@@ -33,6 +33,7 @@
     "sourcebit-target-next": "^0.6.2"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.16.6",
     "prettier": "^3.4.2"
   }
 }
